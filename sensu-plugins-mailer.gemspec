@@ -22,7 +22,7 @@ Gem::Specification.new do |s|
   s.license                = 'MIT'
   s.date                   = Date.today.to_s
   s.files                  = Dir.glob('{bin,lib}/**/*') + %w(LICENSE README.md CHANGELOG.md)
-  s.executables            = Dir.glob("bin/**/*").map { |file| File.basename(file) }
+  s.executables            = Dir.glob('bin/**/*').map { |file| File.basename(file) }
   s.test_files             = s.files.grep(%r{^(test|spec|features)/})
   s.require_paths          = ['lib']
   s.cert_chain             = ['certs/sensu-plugins.pem']
