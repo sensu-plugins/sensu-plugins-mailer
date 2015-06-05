@@ -14,7 +14,6 @@
 #       by defining the "mail_to" attribute in the client config file. This will override the default mailing list where the
 #       alerts are being routed to for that particular client.
 
-require 'rubygems' if RUBY_VERSION < '1.9.0'
 require 'sensu-handler'
 require 'mail'
 require 'timeout'
@@ -73,7 +72,7 @@ class Mailer < Sensu::Handler
     mail_to
   end
 
-  def handle
+  def handle # rubocop:disable all
     json_config = config[:json_config] || 'mailer'
     admin_gui = settings[json_config]['admin_gui'] || 'http://localhost:8080/'
     mail_to = build_mail_to_list
