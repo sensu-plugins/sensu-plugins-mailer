@@ -5,6 +5,10 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 
 ## Unreleased][unreleased]
 
+### Changed
+- updated documentation links in the README and CONTRIBUTING
+- puts deps in alpha order in the gemspec and rakefile
+
 ## 0.0.1 - 2015-06-04
 
 ### Added
