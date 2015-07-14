@@ -29,7 +29,7 @@
 #   for details.
 
 require 'sensu-handler'
-require 'mailgun'
+require 'mailgun-ruby'
 require 'timeout'
 
 class Mailer < Sensu::Handler
