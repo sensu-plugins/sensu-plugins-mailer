@@ -72,7 +72,7 @@ class Mailer < Sensu::Handler
     mail_to
   end
 
-  def handle # rubocop:disable all
+  def handle
     json_config = config[:json_config] || 'mailer'
     admin_gui = settings[json_config]['admin_gui'] || 'http://localhost:8080/'
     mail_to = build_mail_to_list
