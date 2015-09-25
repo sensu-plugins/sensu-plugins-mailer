@@ -46,6 +46,13 @@ class Mailer < Sensu::Handler
          long: '--template TemplateFile',
          required: false
 
+  option :content_type,
+         description: 'Content-type of message',
+         short: '-c ContentType',
+         long: '--content_type ContentType',
+         required: false,
+         default: 'plain'
+
   def short_name
     @event['client']['name'] + '/' + @event['check']['name']
   end
@@ -64,6 +71,24 @@ class Mailer < Sensu::Handler
       'CRITICAL'
     else
       'UNKNOWN'
+    end
+  end
+
+  def get_content_type
+    if config[:content_type]
+      use = config[:content_type]
+    elsif @event['check']['content_type']
+      use = @event['check']['content_type']
+    elsif settings[config[:json_config]]['content_type']
+      use = settings[config[:json_config]]['content_type']
+    else
+      use = 'plain'
+    end
+
+    if use.downcase == 'html'
+      'text/html; charset=UTF-8'
+    else
+      'text/plain; charset=ISO-8859-1'
     end
   end
 
@@ -118,6 +143,7 @@ class Mailer < Sensu::Handler
   def handle
     json_config = config[:json_config]
     body = build_body
+    content_type = get_content_type
     mail_to = build_mail_to_list
     mail_from =  settings[json_config]['mail_from']
     reply_to = settings[json_config]['reply_to'] || mail_from
@@ -169,6 +195,7 @@ class Mailer < Sensu::Handler
           reply_to reply_to
           subject subject
           body body
+          content_type content_type
         end
 
         puts 'mail -- sent alert for ' + short_name + ' to ' + mail_to.to_s
