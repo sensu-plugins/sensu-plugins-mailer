@@ -74,7 +74,7 @@ class Mailer < Sensu::Handler
     end
   end
 
-  def get_content_type
+  def parse_content_type
     if config[:content_type]
       use = config[:content_type]
     elsif @event['check']['content_type']
@@ -143,7 +143,7 @@ class Mailer < Sensu::Handler
   def handle
     json_config = config[:json_config]
     body = build_body
-    content_type = get_content_type
+    content_type = parse_content_type
     mail_to = build_mail_to_list
     mail_from =  settings[json_config]['mail_from']
     reply_to = settings[json_config]['reply_to'] || mail_from
