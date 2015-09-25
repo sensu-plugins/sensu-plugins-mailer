@@ -17,6 +17,7 @@
 require 'sensu-handler'
 require 'mail'
 require 'timeout'
+require 'erubis'
 
 # patch to fix Exim delivery_method: https://github.com/mikel/mail/pull/546
 # #YELLOW
@@ -36,6 +37,13 @@ class Mailer < Sensu::Handler
          description: 'Config Name',
          short: '-j JsonConfig',
          long: '--json_config JsonConfig',
+         required: false,
+         default: 'mailer'
+
+  option :template,
+         description: 'Message template to use',
+         short: '-t TemplateFile',
+         long: '--template TemplateFile',
          required: false
 
   def short_name
@@ -60,7 +68,7 @@ class Mailer < Sensu::Handler
   end
 
   def build_mail_to_list
-    json_config = config[:json_config] || 'mailer'
+    json_config = config[:json_config]
     mail_to = @event['client']['mail_to'] || settings[json_config]['mail_to']
     if settings[json_config].key?('subscriptions') && @event['check']['subscribers']
       @event['check']['subscribers'].each do |sub|
@@ -72,9 +80,44 @@ class Mailer < Sensu::Handler
     mail_to
   end
 
-  def handle
-    json_config = config[:json_config] || 'mailer'
+  def message_template
+    return config[:template] if config[:template]
+    return @event['check']['template'] if @event['check']['template']
+    return settings[config[:json_config]]['template'] if settings[config[:json_config]]['template']
+    nil
+  end
+
+  def build_body
+    json_config = config[:json_config]
     admin_gui = settings[json_config]['admin_gui'] || 'http://localhost:8080/'
+    # try to redact passwords from output and command
+    output = "#{@event['check']['output']}".gsub(/(\s-p|\s-P|\s--password)(\s*\S+)/, '\1 <password omitted>')
+    command = "#{@event['check']['command']}".gsub(/(\s-p|\s-P|\s--password)(\s*\S+)/, '\1 <password omitted>')
+    playbook = "Playbook:  #{@event['check']['playbook']}" if @event['check']['playbook']
+
+    if message_template && File.readable?(message_template)
+      template = File.read(message_template)
+    else
+      template = <<-BODY.gsub(/^\s+/, '')
+        <%= @output %>
+        Admin GUI: <%= admin_gui %>
+        Host: <%= @event['client']['name'] %>
+        Timestamp: <%= Time.at(@event['check']['issued']) %>
+        Address:  <%= @event['client']['address'] %>
+        Check Name:  <%= @event['check']['name'] %>
+        Command:  <%= command %>
+        Status:  <%= status_to_string %>
+        Occurrences:  <%= @event['occurrences'] %>
+        <%= playbook %>
+      BODY
+    end
+    eruby = Erubis::Eruby.new(template)
+    eruby.result(binding)
+  end
+
+  def handle
+    json_config = config[:json_config]
+    body = build_body
     mail_to = build_mail_to_list
     mail_from =  settings[json_config]['mail_from']
     reply_to = settings[json_config]['reply_to'] || mail_from
@@ -88,23 +131,9 @@ class Mailer < Sensu::Handler
     smtp_password = settings[json_config]['smtp_password'] || nil
     smtp_authentication = settings[json_config]['smtp_authentication'] || :plain
     smtp_enable_starttls_auto = settings[json_config]['smtp_enable_starttls_auto'] == 'false' ? false : true
-    # try to redact passwords from output and command
-    output = "#{@event['check']['output']}".gsub(/(\s-p|\s-P|\s--password)(\s*\S+)/, '\1 <password omitted>')
-    command = "#{@event['check']['command']}".gsub(/(\s-p|\s-P|\s--password)(\s*\S+)/, '\1 <password omitted>')
 
-    playbook = "Playbook:  #{@event['check']['playbook']}" if @event['check']['playbook']
-    body = <<-BODY.gsub(/^\s+/, '')
-            #{output}
-            Admin GUI: #{admin_gui}
-            Host: #{@event['client']['name']}
-            Timestamp: #{Time.at(@event['check']['issued'])}
-            Address:  #{@event['client']['address']}
-            Check Name:  #{@event['check']['name']}
-            Command:  #{command}
-            Status:  #{status_to_string}
-            Occurrences:  #{@event['occurrences']}
-            #{playbook}
-          BODY
+    timeout_interval = settings[json_config]['timeout'] || 10
+
     if @event['check']['notification'].nil?
       subject = "#{action_to_string} - #{short_name}: #{status_to_string}"
     else
@@ -133,7 +162,7 @@ class Mailer < Sensu::Handler
     end
 
     begin
-      timeout 10 do
+      timeout timeout_interval do
         Mail.deliver do
           to mail_to
           from mail_from

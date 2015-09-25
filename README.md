@@ -24,6 +24,10 @@ The following three configuration variables must be set if you want mailer to us
 
 There is an optional subscriptions hash which can be added to your mailer.json file.  This subscriptions hash allows you to define individual mail_to addresses for a given subscription.  When the mailer handler runs it will check the clients subscriptions and build a mail_to string with the default mailer.mail_to address as well as any subscriptions the client subscribes to where a mail_to address is found.  There can be N number of hashes inside of subscriptions but the key for a given hash inside of subscriptions must match a subscription name. 
 
+Optionally, you can specify your own ERB template file to use for the message
+body.  The order of precedence for templates is: command-line argument (-t),
+client config called "template", the mailer handler config, default.
+
 ```json
 {
   "mailer": {
@@ -32,6 +36,7 @@ There is an optional subscriptions hash which can be added to your mailer.json f
     "smtp_address": "smtp.example.org",
     "smtp_port": "25",
     "smtp_domain": "example.org",
+    "template": "/optional/path/to/template.erb",
     "subscriptions": {
         "subscription_name": {
             "mail_to": "teamemail@example.com"
