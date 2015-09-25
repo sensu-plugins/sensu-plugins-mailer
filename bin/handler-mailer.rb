@@ -50,8 +50,7 @@ class Mailer < Sensu::Handler
          description: 'Content-type of message',
          short: '-c ContentType',
          long: '--content_type ContentType',
-         required: false,
-         default: 'plain'
+         required: false
 
   def short_name
     @event['client']['name'] + '/' + @event['check']['name']
