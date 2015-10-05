@@ -159,6 +159,15 @@ class Mailer < Sensu::Handler
 
     timeout_interval = settings[json_config]['timeout'] || 10
 
+    headers = {
+      'X-Sensu-Host'        => "#{@event['client']['name']}",
+      'X-Sensu-Timestamp'   => "#{Time.at(@event['check']['issued'])}",
+      'X-Sensu-Address'     => "#{@event['client']['address']}",
+      'X-Sensu-Check-Name'  => "#{@event['check']['name']}",
+      'X-Sensu-Status'      => "#{status_to_string}",
+      'X-Sensu-Occurrences' => "#{@event['occurrences']}"
+    }
+    
     if @event['check']['notification'].nil?
       subject = "#{action_to_string} - #{short_name}: #{status_to_string}"
     else
@@ -194,6 +203,7 @@ class Mailer < Sensu::Handler
           reply_to reply_to
           subject subject
           body body
+          headers headers
           content_type content_type
         end
 
