@@ -38,8 +38,9 @@ client config called "template", the mailer handler config, default.
     "smtp_domain": "example.org",
     "template": "/optional/path/to/template.erb",
     "subscriptions": {
-        "subscription_name": {
-            "mail_to": "teamemail@example.com"
+      "subscription_name": {
+        "mail_to": "teamemail@example.com"
+      }
     }
   }
 }
