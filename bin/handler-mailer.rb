@@ -167,7 +167,7 @@ class Mailer < Sensu::Handler
       'X-Sensu-Status'      => "#{status_to_string}",
       'X-Sensu-Occurrences' => "#{@event['occurrences']}"
     }
-    
+
     if @event['check']['notification'].nil?
       subject = "#{action_to_string} - #{short_name}: #{status_to_string}"
     else
