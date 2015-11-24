@@ -123,7 +123,7 @@ class Mailer < Sensu::Handler
       template = File.read(message_template)
     else
       template = <<-BODY.gsub(/^\s+/, '')
-        <%= @output %>
+        <%= output %>
         Admin GUI: <%= admin_gui %>
         Host: <%= @event['client']['name'] %>
         Timestamp: <%= Time.at(@event['check']['issued']) %>
