@@ -5,6 +5,10 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 
 ## Unreleased
 
+## 0.1.1 - 2015-11-25
+## Fixed
+- Fix check output
+
 ## 0.1.0 - 2015-11-17
 ### Added
 - Ability to use custom ERB template for mail message
