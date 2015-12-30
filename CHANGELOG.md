@@ -4,6 +4,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachangelog.com/)
 
 ## Unreleased
+## Fixed
+- Load correct mailgun gem in mailgun handler
 
 ## 0.1.1 - 2015-11-25
 ## Fixed
