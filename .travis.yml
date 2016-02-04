@@ -18,7 +18,7 @@ script:
 - bundle exec rake default
 - gem build sensu-plugins-mailer.gemspec
 - gem install sensu-plugins-mailer-*.gem
-- echo TRAVIS_COMMIT
+- echo $TRAVIS_COMMIT
 deploy:
   provider: rubygems
   api_key:
