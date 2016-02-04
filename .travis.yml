@@ -18,5 +18,5 @@ notifications:
 
 script:
   - bundle exec rake default
-  - gem build *.gemspec
-  - gem install *.gem
+  - gem build sensu-plugins-mailer.gemspec
+  - gem install sensu-plugins-mailer.gem

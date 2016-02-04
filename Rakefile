@@ -9,9 +9,9 @@ require 'yard/rake/yardoc_task'
 desc 'Don\'t run Rubocop for unsupported versions'
 begin
   args = if RUBY_VERSION >= '2.0.0'
-           [:spec, :make_bin_executable, :yard, :rubocop]
+           [:spec, :make_bin_executable, :yard, :rubocop, :check_binstubs]
          else
-           [:spec, :make_bin_executable, :yard]
+           [:spec, :make_bin_executable, :yard, :check_binstubs]
          end
 end
 
@@ -29,13 +29,12 @@ end
 
 desc 'Make all plugins executable'
 task :make_bin_executable do
-  `chmod -R +x bin/***/*.rb`
+  `chmod -R +x bin/*.rb`
 end
 
 desc 'Test for binstubs'
 task :check_binstubs do
   bin_list = Gem::Specification.load('sensu-plugins-mailer.gemspec').executables
-
   bin_list.each do |b|
     `which #{ b }`
     unless $CHILD_STATUS.success?
