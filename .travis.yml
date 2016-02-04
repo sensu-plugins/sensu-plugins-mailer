@@ -3,7 +3,6 @@ cache:
   - bundler
 install:
   - bundle install
-  - git clone --depth 1 git@github.com:sensu-plugins/tom_servo.git
 
 rvm:
   - 1.9.3
