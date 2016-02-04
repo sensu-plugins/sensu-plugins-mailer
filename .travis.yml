@@ -26,4 +26,5 @@ deploy:
   gem: sensu-plugins-mailer
   on:
     tags: true
+    all_branches: true
     repo: sensu-plugins/sensu-plugins-mailer
