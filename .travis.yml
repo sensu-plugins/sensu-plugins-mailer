@@ -1,22 +1,28 @@
 language: ruby
 cache:
-  - bundler
+- bundler
 install:
-  - bundle install
-
+- bundle install
 rvm:
-  - 1.9.3
-  - 2.0
-  - 2.1
-  - 2.2
+- 1.9.3
+- 2.0
+- 2.1
+- 2.2
 notifications:
   email:
     recipients:
-      - sensu-plugin@sensu-plugins.io
+    - sensu-plugin@sensu-plugins.io
     on_success: change
     on_failure: always
-
 script:
-  - bundle exec rake default
-  - gem build sensu-plugins-mailer.gemspec
-  - gem install sensu-plugins-mailer.gem
+- bundle exec rake default
+- gem build sensu-plugins-mailer.gemspec
+- gem install sensu-plugins-mailer-*.gem
+deploy:
+  provider: rubygems
+  api_key:
+    secure: kkOgvJu5Z7FKUWQK/Rvl3QIbgNvB33xlIVoWaG8mZC4xAqgKoAD+Fi4w7qPmnDvXVM5msks14ENmT7dZnrzVTMcCx5E+N7MCiZST5/lJlRFKUANBU0S8ywhsjeYsmeLvNlMi3/xZzCnXvQXQ+SgUSVWA5oU1V6RzbXZER+MczVY=
+  gem: sensu-plugins-mailer
+  on:
+    tags: true
+    repo: sensu-plugins/sensu-plugins-mailer
