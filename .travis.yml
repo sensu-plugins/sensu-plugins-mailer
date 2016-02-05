@@ -1,6 +1,9 @@
 language: ruby
 cache:
 - bundler
+before_install:
+- openssl aes-256-cbc -K $encrypted_eb20e274e73d_key -iv $encrypted_eb20e274e73d_iv
+  -in certs/pvt_key -out gem-private_key.pem -d
 install:
 - bundle install
 rvm:
@@ -18,7 +21,7 @@ script:
 - bundle exec rake default
 - gem build sensu-plugins-mailer.gemspec
 - gem install sensu-plugins-mailer-*.gem
-- echo $TRAVIS_COMMIT
+- ls certs/
 deploy:
   provider: rubygems
   api_key:
@@ -29,6 +32,3 @@ deploy:
     all_branches: true
     rvm: 2.2
     repo: sensu-plugins/sensu-plugins-mailer
-before_install:
-- openssl aes-256-cbc -K $encrypted_eb20e274e73d_key -iv $encrypted_eb20e274e73d_iv
-  -in certs/pvt_key -out gem-private_key.pem -d
