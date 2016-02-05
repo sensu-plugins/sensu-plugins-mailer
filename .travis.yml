@@ -21,7 +21,6 @@ script:
 - bundle exec rake default
 - gem build sensu-plugins-mailer.gemspec
 - gem install sensu-plugins-mailer-*.gem
-- ls certs/
 deploy:
   provider: rubygems
   api_key:
