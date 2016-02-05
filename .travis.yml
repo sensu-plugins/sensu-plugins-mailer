@@ -18,6 +18,7 @@ notifications:
     on_success: change
     on_failure: always
 script:
+- CODECLIMATE_REPO_TOKEN=$CODECLIMATE_REPO_TOKEN bundle exec rake
 - bundle exec rake default
 - gem build sensu-plugins-mailer.gemspec
 - gem install sensu-plugins-mailer-*.gem
@@ -31,3 +32,6 @@ deploy:
     all_branches: true
     rvm: 2.2
     repo: sensu-plugins/sensu-plugins-mailer
+addons:
+  code_climate:
+    repo_token: 
