@@ -5,6 +5,16 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 
 ## [Unreleased]
 
+## [0.1.5] - 2016-02-04
+### Added
+- new certs
+
+## [0.1.4] - 2016-02-04
+- Testing
+
+## [0.1.3] - 2016-02-04
+- Testing
+
 ## [0.1.2] - 2015-12-30
 ### Fixed
 - Load correct mailgun gem in mailgun handler
@@ -38,7 +48,10 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 ### Added
 - initial release
 
-[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-mailer/compare/0.1.2...HEAD
+[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-mailer/compare/0.1.5...HEAD
+[0.1.5]: https://github.com/sensu-plugins/sensu-plugins-mailer/compare/0.1.4...0.1.5
+[0.1.4]: https://github.com/sensu-plugins/sensu-plugins-mailer/compare/0.1.3...0.1.4
+[0.1.3]: https://github.com/sensu-plugins/sensu-plugins-mailer/compare/0.1.2...0.1.3
 [0.1.2]: https://github.com/sensu-plugins/sensu-plugins-mailer/compare/0.1.1...0.1.2
 [0.1.1]: https://github.com/sensu-plugins/sensu-plugins-mailer/compare/0.1.0...0.1.1
 [0.1.0]: https://github.com/sensu-plugins/sensu-plugins-mailer/compare/0.0.2...0.1.0
