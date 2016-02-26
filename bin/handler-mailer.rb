@@ -84,7 +84,7 @@ class Mailer < Sensu::Handler
             'plain'
           end
 
-    if use.casecmp('html')
+    if use.casecmp('html') == 0
       'text/html; charset=UTF-8'
     else
       'text/plain; charset=ISO-8859-1'
