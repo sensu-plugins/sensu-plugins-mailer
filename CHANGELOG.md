@@ -44,7 +44,6 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 - puts deps in alpha order in the gemspec and rakefile
 
 ## 0.0.1 - 2015-06-04
-
 ### Added
 - initial release
 
