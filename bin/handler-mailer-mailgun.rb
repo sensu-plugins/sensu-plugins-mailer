@@ -41,12 +41,21 @@ class Mailer < Sensu::Handler
     @event['action'].eql?('resolve') ? 'RESOLVED' : 'ALERT'
   end
 
+  def prefix_subject
+    if params[:subject_prefix]
+      params[:subject_prefix] + ' '
+    else
+      ''
+    end
+  end
+
   def handle
     params = {
       mail_to: settings['mailer-mailgun']['mail_to'],
       mail_from: settings['mailer-mailgun']['mail_from'],
       mg_apikey: settings['mailer-mailgun']['mg_apikey'],
-      mg_domain: settings['mailer-mailgun']['mg_domain']
+      mg_domain: settings['mailer-mailgun']['mg_domain'],
+      subject_prefix: settings['mailer-ses']['subject_prefix']
     }
 
     body = <<-BODY.gsub(/^ {14}/, '')
@@ -59,7 +68,7 @@ class Mailer < Sensu::Handler
             Status:  #{@event['check']['status']}
             Occurrences:  #{@event['occurrences']}
           BODY
-    subject = "#{action_to_string} - #{short_name}: #{@event['check']['notification']}"
+    subject = "#{prefix_subject}#{action_to_string} - #{short_name}: #{@event['check']['notification']}"
 
     mg_client = Mailgun::Client.new params[:mg_apikey]
 

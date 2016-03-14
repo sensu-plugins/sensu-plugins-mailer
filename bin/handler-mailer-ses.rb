@@ -24,13 +24,22 @@ class Mailer < Sensu::Handler
     @event['action'].eql?('resolve') ? 'RESOLVED' : 'ALERT'
   end
 
+  def prefix_subject
+    if params[:subject_prefix]
+      params[:subject_prefix] + ' '
+    else
+      ''
+    end
+  end
+
   def handle
     params = {
       mail_to: settings['mailer-ses']['mail_to'],
       mail_from: settings['mailer-ses']['mail_from'],
       aws_access_key: settings['mailer-ses']['aws_access_key'],
       aws_secret_key: settings['mailer-ses']['aws_secret_key'],
-      aws_ses_endpoint: settings['mailer-ses']['aws_ses_endpoint']
+      aws_ses_endpoint: settings['mailer-ses']['aws_ses_endpoint'],
+      subject_prefix: settings['mailer-ses']['subject_prefix']
     }
 
     body = <<-BODY.gsub(/^ {14}/, '')
@@ -43,7 +52,7 @@ class Mailer < Sensu::Handler
             Status:  #{@event['check']['status']}
             Occurrences:  #{@event['occurrences']}
           BODY
-    subject = "#{action_to_string} - #{short_name}: #{@event['check']['notification']}"
+    subject = "#{prefix_subject}#{action_to_string} - #{short_name}: #{@event['check']['notification']}"
 
     ses = AWS::SES::Base.new(
       access_key_id: params[:aws_access_key],
