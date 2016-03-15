@@ -55,7 +55,7 @@ class Mailer < Sensu::Handler
       mail_from: settings['mailer-mailgun']['mail_from'],
       mg_apikey: settings['mailer-mailgun']['mg_apikey'],
       mg_domain: settings['mailer-mailgun']['mg_domain'],
-      subject_prefix: settings['mailer-ses']['subject_prefix']
+      subject_prefix: settings['mailer-mailgun']['subject_prefix']
     }
 
     body = <<-BODY.gsub(/^ {14}/, '')
