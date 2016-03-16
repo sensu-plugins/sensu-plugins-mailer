@@ -52,12 +52,28 @@ class Mailer < Sensu::Handler
          long: '--content_type ContentType',
          required: false
 
+  option :subject_prefix,
+         description: 'Prefix message subjects with this string',
+         short: '-s prefix',
+         long: '--subject_prefix prefix',
+         required: false
+
   def short_name
     @event['client']['name'] + '/' + @event['check']['name']
   end
 
   def action_to_string
     @event['action'].eql?('resolve') ? 'RESOLVED' : 'ALERT'
+  end
+
+  def prefix_subject
+    if config[:subject_prefix]
+      config[:subject_prefix] + ' '
+    elsif settings[config[:json_config]]['subject_prefix']
+      settings[config[:json_config]]['subject_prefix'] + ' '
+    else
+      ''
+    end
   end
 
   def status_to_string
@@ -169,9 +185,9 @@ class Mailer < Sensu::Handler
     }
 
     subject = if @event['check']['notification'].nil?
-                "#{action_to_string} - #{short_name}: #{status_to_string}"
+                "#{prefix_subject}#{action_to_string} - #{short_name}: #{status_to_string}"
               else
-                "#{action_to_string} - #{short_name}: #{@event['check']['notification']}"
+                "#{prefix_subject}#{action_to_string} - #{short_name}: #{@event['check']['notification']}"
               end
 
     Mail.defaults do
