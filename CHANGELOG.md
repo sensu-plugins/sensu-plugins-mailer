@@ -5,6 +5,13 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 
 ## [Unreleased]
 
+## [0.2.0] - 2016-03-17
+### Added
+- Support for prefixing the email subject
+
+### Fixed
+- handler-mailer.rb: Fix content type selection
+
 ## [0.1.5] - 2016-02-04
 ### Added
 - new certs
@@ -47,8 +54,9 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 ### Added
 - initial release
 
-[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-mailer/compare/0.1.5...HEAD
-[0.1.5]: https://github.com/sensu-plugins/sensu-plugins-mailer/compare/0.1.4...0.1.5
+[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-mailer/compare/0.2.0...HEAD
+[0.2.0]: https://github.com/sensu-plugins/sensu-plugins-mailer/compare/v0.1.5...0.2.0
+[0.1.5]: https://github.com/sensu-plugins/sensu-plugins-mailer/compare/0.1.4...v0.1.5
 [0.1.4]: https://github.com/sensu-plugins/sensu-plugins-mailer/compare/0.1.3...0.1.4
 [0.1.3]: https://github.com/sensu-plugins/sensu-plugins-mailer/compare/0.1.2...0.1.3
 [0.1.2]: https://github.com/sensu-plugins/sensu-plugins-mailer/compare/0.1.1...0.1.2
