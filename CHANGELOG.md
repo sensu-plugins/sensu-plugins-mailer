@@ -5,6 +5,10 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 
 ## [Unreleased]
 
+## [0.2.1] - 2016-04-15
+### Fixed
+- Fix aws-ses gem dependency
+
 ## [0.2.0] - 2016-03-17
 ### Added
 - Support for prefixing the email subject
