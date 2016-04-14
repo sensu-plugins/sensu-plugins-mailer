@@ -34,6 +34,7 @@ Gem::Specification.new do |s|
   s.version                = SensuPluginsMailer::Version::VER_STRING
 
   s.add_runtime_dependency 'aws',               '2.10.2'
+  s.add_runtime_dependency 'aws-ses',           '0.6.0'
   s.add_runtime_dependency 'mail',              '2.6.3'
   s.add_runtime_dependency 'mailgun-ruby',      '1.0.3'
   s.add_runtime_dependency 'sensu-plugin',      '~> 1.2'
