@@ -5,6 +5,9 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 
 ## [Unreleased]
 
+### Added
+- handler-mailer.rb: add smtp_use_tls setting to support SMTPS in Amazon SES
+
 ## [0.3.0] - 2016-04-23
 ### Fixed
 - Fix aws-ses gem dependency
