@@ -5,8 +5,12 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 
 ## [Unreleased]
 
+## [0.3.1] - 2016-05-11
 ### Added
 - handler-mailer.rb: add smtp_use_tls setting to support SMTPS in Amazon SES
+
+### Changed
+- Upgrade to rubocop 0.40
 
 ## [0.3.0] - 2016-04-23
 ### Fixed
@@ -64,7 +68,8 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 ### Added
 - initial release
 
-[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-mailer/compare/0.3.0...HEAD
+[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-mailer/compare/0.3.1...HEAD
+[0.3.1]: https://github.com/sensu-plugins/sensu-plugins-mailer/compare/v0.3.0...0.3.1
 [0.3.0]: https://github.com/sensu-plugins/sensu-plugins-mailer/compare/v0.2.0...0.3.0
 [0.2.0]: https://github.com/sensu-plugins/sensu-plugins-mailer/compare/v0.1.5...0.2.0
 [0.1.5]: https://github.com/sensu-plugins/sensu-plugins-mailer/compare/0.1.4...v0.1.5
