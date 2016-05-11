@@ -180,6 +180,7 @@ class Mailer < Sensu::Handler
     smtp_username = settings[json_config]['smtp_username'] || nil
     smtp_password = settings[json_config]['smtp_password'] || nil
     smtp_authentication = settings[json_config]['smtp_authentication'] || :plain
+    smtp_use_tls = settings[json_config]['smtp_use_tls'] || nil
     smtp_enable_starttls_auto = settings[json_config]['smtp_enable_starttls_auto'] == 'false' ? false : true
 
     timeout_interval = settings[json_config]['timeout'] || 10
@@ -205,6 +206,7 @@ class Mailer < Sensu::Handler
         port: smtp_port,
         domain: smtp_domain,
         openssl_verify_mode: 'none',
+        tls: smtp_use_tls,
         enable_starttls_auto: smtp_enable_starttls_auto
       }
 
