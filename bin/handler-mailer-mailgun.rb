@@ -73,7 +73,7 @@ class Mailer < Sensu::Handler
     mg_client = Mailgun::Client.new params[:mg_apikey]
 
     begin
-      timeout 10 do
+      Timeout.timeout 10 do
         message_params = {
           from:     params[:mail_from],
           to:       params[:mail_to],

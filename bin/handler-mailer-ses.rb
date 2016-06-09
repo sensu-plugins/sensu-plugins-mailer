@@ -61,7 +61,7 @@ class Mailer < Sensu::Handler
     )
 
     begin
-      timeout 10 do
+      Timeout.timeout 10 do
         ses.send_email(
           to: params[:mail_to],
           source: params[:mail_from],

@@ -223,7 +223,7 @@ class Mailer < Sensu::Handler
     end
 
     begin
-      timeout timeout_interval do
+      Timeout.timeout timeout_interval do
         Mail.deliver do
           to mail_to
           from mail_from
