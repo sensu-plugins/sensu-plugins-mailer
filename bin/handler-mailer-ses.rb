@@ -25,15 +25,15 @@ class Mailer < Sensu::Handler
   end
 
   def prefix_subject
-    if params[:subject_prefix]
-      params[:subject_prefix] + ' '
+    if @params[:subject_prefix]
+      @params[:subject_prefix] + ' '
     else
       ''
     end
   end
 
   def handle
-    params = {
+    @params = {
       mail_to: settings['mailer-ses']['mail_to'],
       mail_from: settings['mailer-ses']['mail_from'],
       aws_access_key: settings['mailer-ses']['aws_access_key'],
@@ -55,21 +55,21 @@ class Mailer < Sensu::Handler
     subject = "#{prefix_subject}#{action_to_string} - #{short_name}: #{@event['check']['notification']}"
 
     ses = AWS::SES::Base.new(
-      access_key_id: params[:aws_access_key],
-      secret_access_key: params[:aws_secret_key],
-      server: params[:aws_ses_endpoint]
+      access_key_id: @params[:aws_access_key],
+      secret_access_key: @params[:aws_secret_key],
+      server: @params[:aws_ses_endpoint]
     )
 
     begin
       Timeout.timeout 10 do
         ses.send_email(
-          to: params[:mail_to],
-          source: params[:mail_from],
+          to: @params[:mail_to],
+          source: @params[:mail_from],
           subject: subject,
           text_body: body
         )
 
-        puts 'mail -- sent alert for ' + short_name + ' to ' + params[:mail_to]
+        puts 'mail -- sent alert for ' + short_name + ' to ' + @params[:mail_to]
       end
     rescue Timeout::Error
       puts 'mail -- timed out while attempting to ' + @event['action'] + ' an incident -- ' + short_name
