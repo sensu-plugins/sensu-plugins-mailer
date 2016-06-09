@@ -4,6 +4,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachangelog.com/)
 
 ## [Unreleased]
+### Fixed
+- fixing timeout deprecation for ruby 2.3.0
 
 ## [0.3.1] - 2016-05-11
 ### Added
