@@ -6,13 +6,13 @@
 # Copyright 2013 github.com/foomatty
 # Copyright 2012 Pal-Kristian Hamre (https://github.com/pkhamre | http://twitter.com/pkhamre)
 #
-# Requires aws-ses gem 'gem install aws-ses'
+# Requires aws-sdk gem 'gem install aws-sdk'
 #
 # Released under the same terms as Sensu (the MIT license); see LICENSE
 # for details.
 
 require 'sensu-handler'
-require 'aws/ses'
+require 'aws-sdk'
 require 'timeout'
 
 class Mailer < Sensu::Handler
@@ -32,43 +32,74 @@ class Mailer < Sensu::Handler
     end
   end
 
+  def status_to_string
+    case @event['check']['status']
+    when 0
+      'OK'
+    when 1
+      'WARNING'
+    when 2
+      'CRITICAL'
+    else
+      'UNKNOWN'
+    end
+  end
+
   def handle
+    admin_gui = settings['mailer-ses']['admin_gui'] || 'http://localhost:8080/'
+    playbook = "Playbook:  #{@event['check']['playbook']}" if @event['check']['playbook']
+
     params = {
       mail_to: settings['mailer-ses']['mail_to'],
       mail_from: settings['mailer-ses']['mail_from'],
       aws_access_key: settings['mailer-ses']['aws_access_key'],
       aws_secret_key: settings['mailer-ses']['aws_secret_key'],
-      aws_ses_endpoint: settings['mailer-ses']['aws_ses_endpoint'],
+      aws_region: settings['mailer-ses']['aws_region'],
       subject_prefix: settings['mailer-ses']['subject_prefix']
     }
 
-    body = <<-BODY.gsub(/^ {14}/, '')
-            #{@event['check']['output']}
+    # try to redact passwords from output and command
+    output = "#{@event['check']['output']}".gsub(/(\s-p|\s-P|\s--password)(\s*\S+)/, '\1 <password omitted>')
+    command = "#{@event['check']['command']}".gsub(/(\s-p|\s-P|\s--password)(\s*\S+)/, '\1 <password omitted>')
+
+    body = <<-BODY.gsub(/^\s+/, '')
+            #{output}
+            Admin GUI: #{admin_gui}
             Host: #{@event['client']['name']}
             Timestamp: #{Time.at(@event['check']['issued'])}
             Address:  #{@event['client']['address']}
             Check Name:  #{@event['check']['name']}
-            Command:  #{@event['check']['command']}
-            Status:  #{@event['check']['status']}
+            Command:  #{command}
+            Status:  #{status_to_string}
             Occurrences:  #{@event['occurrences']}
+            #{playbook}
           BODY
     subject = "#{prefix_subject}#{action_to_string} - #{short_name}: #{@event['check']['notification']}"
 
-    ses = AWS::SES::Base.new(
+    ses = Aws::SES::Client.new(
+      region: params[:aws_region],
       access_key_id: params[:aws_access_key],
-      secret_access_key: params[:aws_secret_key],
-      server: params[:aws_ses_endpoint]
+      secret_access_key: params[:aws_secret_key]
     )
 
     begin
       Timeout.timeout 10 do
         ses.send_email(
-          to: params[:mail_to],
           source: params[:mail_from],
-          subject: subject,
-          text_body: body
+          destination: {
+            to_addresses: [params[:mail_to]]
+          },
+          message: {
+            subject: {
+              data: subject
+            },
+            body: {
+              text: {
+                data: body
+              }
+            }
+          }
         )
-
         puts 'mail -- sent alert for ' + short_name + ' to ' + params[:mail_to]
       end
     rescue Timeout::Error

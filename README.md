@@ -65,7 +65,7 @@ client config called "template", the mailer handler config, default.
     "mail_to": "monitor@example.com",
     "aws_access_key": "myawsaccesskey",
     "aws_secret_key": "myawssecretkey",
-    "aws_ses_endpoint": "email.us-east-1.amazonaws.com"
+    "aws_region": "us-east-1"
   }
 }
 ```
