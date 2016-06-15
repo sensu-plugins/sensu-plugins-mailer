@@ -41,14 +41,6 @@ class Mailer < Sensu::Handler
     @event['action'].eql?('resolve') ? 'RESOLVED' : 'ALERT'
   end
 
-  def prefix_subject
-    if params[:subject_prefix]
-      params[:subject_prefix] + ' '
-    else
-      ''
-    end
-  end
-
   def handle
     params = {
       mail_to: settings['mailer-mailgun']['mail_to'],
@@ -68,6 +60,7 @@ class Mailer < Sensu::Handler
             Status:  #{@event['check']['status']}
             Occurrences:  #{@event['occurrences']}
           BODY
+    prefix_subject = params[:subject_prefix] + ' ' if params[:subject_prefix]
     subject = "#{prefix_subject}#{action_to_string} - #{short_name}: #{@event['check']['notification']}"
 
     mg_client = Mailgun::Client.new params[:mg_apikey]
