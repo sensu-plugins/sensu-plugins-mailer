@@ -4,9 +4,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachangelog.com/)
 
 ## [Unreleased]
+
+## [1.0.0] - 2016-06-23
 ### Fixed
 - fixing timeout deprecation for ruby 2.3.0
-- fixing undefined local variable or method params error (handler-mailer-mailgun.rb/handler-mailer-ses.rb)
+- handler-mailer-mailgun.rb/handler-mailer-ses.rb: fixing undefined local variable or method params error
 
 ### Removed
 - Support for Ruby 1.9.3; Added support for Ruby 2.3.0
@@ -77,9 +79,10 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 ### Added
 - initial release
 
-[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-mailer/compare/0.3.1...HEAD
-[0.3.1]: https://github.com/sensu-plugins/sensu-plugins-mailer/compare/v0.3.0...0.3.1
-[0.3.0]: https://github.com/sensu-plugins/sensu-plugins-mailer/compare/v0.2.0...0.3.0
+[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-mailer/compare/1.0.0...HEAD
+[1.0.0]: https://github.com/sensu-plugins/sensu-plugins-mailer/compare/0.3.1...1.0.0
+[0.3.1]: https://github.com/sensu-plugins/sensu-plugins-mailer/compare/0.3.0...0.3.1
+[0.3.0]: https://github.com/sensu-plugins/sensu-plugins-mailer/compare/0.2.0...0.3.0
 [0.2.0]: https://github.com/sensu-plugins/sensu-plugins-mailer/compare/v0.1.5...0.2.0
 [0.1.5]: https://github.com/sensu-plugins/sensu-plugins-mailer/compare/0.1.4...v0.1.5
 [0.1.4]: https://github.com/sensu-plugins/sensu-plugins-mailer/compare/0.1.3...0.1.4
