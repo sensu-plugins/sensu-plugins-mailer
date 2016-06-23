@@ -8,6 +8,12 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 - fixing timeout deprecation for ruby 2.3.0
 - fixing undefined local variable or method params error (handler-mailer-mailgun.rb/handler-mailer-ses.rb)
 
+### Removed
+- Support for Ruby 1.9.3; Added support for Ruby 2.3.0
+
+### Changed
+- Update to Rubocop 0.40 and cleanup
+
 ## [0.3.1] - 2016-05-11
 ### Added
 - handler-mailer.rb: add smtp_use_tls setting to support SMTPS in Amazon SES
