@@ -7,8 +7,8 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 
 ## [1.0.0] - 2016-06-23
 ### Fixed
-- fixing timeout deprecation for ruby 2.3.0
-- handler-mailer-mailgun.rb/handler-mailer-ses.rb: fixing undefined local variable or method params error
+- fix timeout deprecation for ruby 2.3.0
+- handler-mailer-mailgun.rb/handler-mailer-ses.rb: fix undefined local variable or method params error
 
 ### Removed
 - Support for Ruby 1.9.3; Added support for Ruby 2.3.0
