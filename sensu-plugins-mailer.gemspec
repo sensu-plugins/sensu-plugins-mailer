@@ -7,7 +7,7 @@ require_relative 'lib/sensu-plugins-mailer'
 Gem::Specification.new do |s|
   s.authors                = ['Sensu-Plugins and contributors']
   s.date                   = Date.today.to_s
-  s.description            = 'Sensu mailer plugins'
+  s.description            = 'Provides mail output for Sensu'
   s.email                  = '<sensu-users@googlegroups.com>'
   s.executables            = Dir.glob('bin/**/*.rb').map { |file| File.basename(file) }
   s.files                  = Dir.glob('{bin,lib}/**/*') + %w(LICENSE README.md CHANGELOG.md)
