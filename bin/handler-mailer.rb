@@ -126,6 +126,11 @@ class Mailer < Sensu::Handler
         end
       end
     end
+    if settings[json_config].key?('clients')
+      if settings[json_config]['clients'].include?(@event['client']['name'])
+        mail_to << ", #{settings[json_config]['clients'][@event['client']['name']]['mail_to']}"
+      end
+    end
     mail_to
   end
 
