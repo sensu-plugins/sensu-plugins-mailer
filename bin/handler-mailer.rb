@@ -110,19 +110,10 @@ class Mailer < Sensu::Handler
   def build_mail_to_list
     json_config = config[:json_config]
     mail_to = @event['client']['mail_to'] || settings[json_config]['mail_to']
-    if settings[json_config].key?('subscriptions')
-      if @event['check']['subscribers']
-        @event['check']['subscribers'].each do |sub|
-          if settings[json_config]['subscriptions'].key?(sub)
-            mail_to << ", #{settings[json_config]['subscriptions'][sub]['mail_to']}"
-          end
-        end
-      end
-      if @event['client']['subscriptions']
-        @event['client']['subscriptions'].each do |sub|
-          if settings[json_config]['subscriptions'].key?(sub)
-            mail_to << ", #{settings[json_config]['subscriptions'][sub]['mail_to']}"
-          end
+    if settings[json_config].key?('subscriptions') && @event['check']['subscribers']
+      @event['check']['subscribers'].each do |sub|
+        if settings[json_config]['subscriptions'].key?(sub)
+          mail_to << ", #{settings[json_config]['subscriptions'][sub]['mail_to']}"
         end
       end
     end
