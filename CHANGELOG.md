@@ -4,6 +4,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachangelog.com/)
 
 ## [Unreleased]
+### Fixed
+- handler-mailer.rb - revert the commit which makes email go to wrong addresses
 
 ## [1.0.0] - 2016-06-23
 ### Fixed
