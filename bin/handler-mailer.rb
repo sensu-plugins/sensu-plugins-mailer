@@ -101,7 +101,7 @@ class Mailer < Sensu::Handler
             'plain'
           end
 
-    if use.casecmp('html') == 0
+    if use.casecmp('html').zero?
       'text/html; charset=UTF-8'
     else
       'text/plain; charset=ISO-8859-1'
@@ -115,11 +115,11 @@ class Mailer < Sensu::Handler
     if settings[json_config].key?('subscriptions') && @event['check']['subscribers']
       @event['check']['subscribers'].each do |sub|
         if settings[json_config]['subscriptions'].key?(sub)
-          mail_to.add("#{settings[json_config]['subscriptions'][sub]['mail_to']}")
+          mail_to.add(settings[json_config]['subscriptions'][sub]['mail_to'].to_s)
         end
       end
     end
-    mail_to.to_a.join(", ")
+    mail_to.to_a.join(', ')
   end
 
   def message_template
