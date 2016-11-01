@@ -7,6 +7,9 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 ### Fixed
 - handler-mailer.rb - revert the commit which makes email go to wrong addresses
 
+### Added
+- handler-mailer.rb: add contact routing like Sensu Enterprise works 
+
 ## [1.0.0] - 2016-06-23
 ### Fixed
 - fix timeout deprecation for ruby 2.3.0

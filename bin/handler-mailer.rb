@@ -119,6 +119,22 @@ class Mailer < Sensu::Handler
         end
       end
     end
+    if settings.key?('contacts')
+      all_contacts = []
+      for field in ['check', 'client']
+        if @event[field].key?('contact')
+          all_contacts << @event[field]['contact']
+        end
+        if @event[field].key?('contacts')
+          all_contacts += @event[field]['contacts']
+        end
+      end
+      all_contacts.each do |sub|
+        if settings['contacts'].key?(sub)
+          mail_to.add(settings['contacts'][sub]['email']['to'].to_s)
+        end
+      end
+    end
     mail_to.to_a.join(', ')
   end
 
