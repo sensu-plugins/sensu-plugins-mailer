@@ -121,7 +121,7 @@ class Mailer < Sensu::Handler
     end
     if settings.key?('contacts')
       all_contacts = []
-      for field in ['check', 'client']
+      %w(check client).each do |field|
         if @event[field].key?('contact')
           all_contacts << @event[field]['contact']
         end
