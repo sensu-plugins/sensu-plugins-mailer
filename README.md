@@ -101,7 +101,7 @@ Optionally, this handler can use the same syntax as [Sensu Enterprise contact ro
 } 
 ```
 
-Then, in a check defination, you can specify a contact or an array of contacts which should be notified by e-mail:
+Then, in a check definition, you can specify a contact or an array of contacts which should be notified by e-mail:
 
 **example_check.json**
 ```
