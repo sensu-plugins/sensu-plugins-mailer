@@ -116,7 +116,7 @@ Then, in a check definition, you can specify a contact or an array of contacts w
 }
 ```
 
-Additionally, a client defination can specify a contact or an array of contacts to be notified of any check which alerts to the mailer handler. This is configured by specifying a contact value, or contacts array in the client.json configuration.
+Additionally, a client definition can specify a contact or an array of contacts to be notified of any check which alerts to the mailer handler. This is configured by specifying a contact value, or contacts array in the client.json configuration.
 
 ## Installation
 
