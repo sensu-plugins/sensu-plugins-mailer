@@ -16,6 +16,17 @@ require 'aws/ses'
 require 'timeout'
 
 class Mailer < Sensu::Handler
+  option :json_config,
+         description: 'Config Name',
+         short: '-j JsonConfig',
+         long: '--json_config JsonConfig',
+         required: false,
+         default: 'mailer-ses'
+
+  def json_config
+    @json_config ||= config[:json_config]
+  end
+
   def short_name
     @event['client']['name'] + '/' + @event['check']['name']
   end
@@ -26,12 +37,12 @@ class Mailer < Sensu::Handler
 
   def handle
     params = {
-      mail_to: settings['mailer-ses']['mail_to'],
-      mail_from: settings['mailer-ses']['mail_from'],
-      aws_access_key: settings['mailer-ses']['aws_access_key'],
-      aws_secret_key: settings['mailer-ses']['aws_secret_key'],
-      aws_ses_endpoint: settings['mailer-ses']['aws_ses_endpoint'],
-      subject_prefix: settings['mailer-ses']['subject_prefix']
+      mail_to: settings[json_config]['mail_to'],
+      mail_from: settings[json_config]['mail_from'],
+      aws_access_key: settings[json_config]['aws_access_key'],
+      aws_secret_key: settings[json_config]['aws_secret_key'],
+      aws_ses_endpoint: settings[json_config]['aws_ses_endpoint'],
+      subject_prefix: settings[json_config]['subject_prefix']
     }
 
     body = <<-BODY.gsub(/^ {14}/, '')
