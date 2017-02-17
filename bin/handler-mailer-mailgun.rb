@@ -33,6 +33,17 @@ require 'mailgun'
 require 'timeout'
 
 class Mailer < Sensu::Handler
+  option :json_config,
+         description: 'Config Name',
+         short: '-j JsonConfig',
+         long: '--json_config JsonConfig',
+         required: false,
+         default: 'mailer-mailgun'
+
+  def json_config
+    @json_config ||= config[:json_config]
+  end
+
   def short_name
     @event['client']['name'] + '/' + @event['check']['name']
   end
@@ -43,11 +54,11 @@ class Mailer < Sensu::Handler
 
   def handle
     params = {
-      mail_to: settings['mailer-mailgun']['mail_to'],
-      mail_from: settings['mailer-mailgun']['mail_from'],
-      mg_apikey: settings['mailer-mailgun']['mg_apikey'],
-      mg_domain: settings['mailer-mailgun']['mg_domain'],
-      subject_prefix: settings['mailer-mailgun']['subject_prefix']
+      mail_to: settings[json_config]['mail_to'],
+      mail_from: settings[json_config]['mail_from'],
+      mg_apikey: settings[json_config]['mg_apikey'],
+      mg_domain: settings[json_config]['mg_domain'],
+      subject_prefix: settings[json_config]['subject_prefix']
     }
 
     body = <<-BODY.gsub(/^ {14}/, '')
