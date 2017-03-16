@@ -88,4 +88,29 @@ client config called "template", the mailer handler config, default.
 
 [Installation and Setup](http://sensu-plugins.io/docs/installation_instructions.html)
 
+Create a handler file in `/etc/sensu/conf.d` with the following content, replacing with your own configuration:
+
+```json
+{
+    "mailer" :  {
+        "admin_gui" : "http://localhost:3000",
+        "mail_from": "from@email.com",
+        "mail_to": "to@email.com",
+        "delivery_method": "smtp",
+        "smtp_address": "localhost",
+        "smtp_port": "25",
+        "smtp_domain": "localhost.local_domain",
+        "smtp_enable_starttls_auto": "true",
+        "smtp_username" : "username",
+        "smtp_password" : "XXXXXXXX"
+    },
+    "handlers": {
+        "mailer": {
+            "type": "pipe",
+            "command": "/opt/sensu/embedded/bin/handler-mailer.rb"
+        }
+    }
+}
+```
+
 ## Notes
