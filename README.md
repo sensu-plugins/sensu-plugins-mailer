@@ -83,6 +83,7 @@ client config called "template", the mailer handler config, default.
   }
 }
 ```
+By default, the handler will use `plain` as the SMTP authentication type, but you may also specify `"smtp_authentication": "ntlm"` for compatible servers, e.g. Microsoft Exchange.
 
 ## Installation
 

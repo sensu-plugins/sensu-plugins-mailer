@@ -19,6 +19,7 @@ require 'mail'
 require 'timeout'
 require 'erubis'
 require 'set'
+require 'ntlm/smtp'
 
 # patch to fix Exim delivery_method: https://github.com/mikel/mail/pull/546
 # #YELLOW
