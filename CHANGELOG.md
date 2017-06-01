@@ -4,6 +4,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachangelog.com/)
 
 ## [Unreleased]
+## [1.1.0] - 2017-06-01
 ### Fixed
 - handler-mailer.rb - revert the commit which makes email go to wrong addresses
 - handler-mailer.rb - change `json_config` to `json_config_name` for clarity
@@ -83,7 +84,8 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 ### Added
 - initial release
 
-[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-mailer/compare/1.0.0...HEAD
+[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-mailer/compare/1.1.0...HEAD
+[1.1.0]: https://github.com/sensu-plugins/sensu-plugins-mailer/compare/1.0.0...1.1.0
 [1.0.0]: https://github.com/sensu-plugins/sensu-plugins-mailer/compare/0.3.1...1.0.0
 [0.3.1]: https://github.com/sensu-plugins/sensu-plugins-mailer/compare/0.3.0...0.3.1
 [0.3.0]: https://github.com/sensu-plugins/sensu-plugins-mailer/compare/0.2.0...0.3.0
@@ -95,4 +97,3 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 [0.1.1]: https://github.com/sensu-plugins/sensu-plugins-mailer/compare/0.1.0...0.1.1
 [0.1.0]: https://github.com/sensu-plugins/sensu-plugins-mailer/compare/0.0.2...0.1.0
 [0.0.2]: https://github.com/sensu-plugins/sensu-plugins-mailer/compare/0.0.1...0.0.2
-
