@@ -62,9 +62,9 @@ class Mailer < Sensu::Handler
   # JSON configuration settings typically defined in the handler
   # file for mailer. JSON Config Name defaultly looks for a block
   # named 'mailer', as seen in the Installation step of the README
-  # 
+  #
   # @example
-  # 
+  #
   # ```json
   # {
   #   "admin_gui":                 "http://localhost:3000",
