@@ -6,6 +6,8 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 ## [Unreleased]
 ### Fixed
 - handler-mailer.rb - revert the commit which makes email go to wrong addresses
+- handler-mailer.rb - change `json_config` to `json_config_name` for clarity
+  and add documentation
 
 ## [1.0.0] - 2016-06-23
 ### Fixed

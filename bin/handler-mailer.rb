@@ -10,7 +10,7 @@
 # for details.
 
 # Note: The default mailer config is fetched from the predefined json config file which is "mailer.json" or any other
-#       file defiend using the "json_config" command line option. The mailing list could also be configured on a per client basis
+#       file defined using the "json_config" command line option. The mailing list could also be configured on a per client basis
 #       by defining the "mail_to" attribute in the client config file. This will override the default mailing list where the
 #       alerts are being routed to for that particular client.
 
@@ -35,8 +35,8 @@ module ::Mail # rubocop:disable Style/ClassAndModuleChildren
 end
 
 class Mailer < Sensu::Handler
-  option :json_config,
-         description: 'Config Name',
+  option :json_config_name,
+         description: 'Name of the JSON Configuration block in Sensu',
          short: '-j JsonConfig',
          long: '--json_config JsonConfig',
          required: false,
@@ -60,6 +60,32 @@ class Mailer < Sensu::Handler
          long: '--subject_prefix prefix',
          required: false
 
+  # JSON configuration settings typically defined in the handler
+  # file for mailer. JSON Config Name defaultly looks for a block
+  # named 'mailer', as seen in the Installation step of the README
+  #
+  # @example
+  #
+  # ```json
+  # {
+  #   "admin_gui":                 "http://localhost:3000",
+  #   "mail_from":                 "from@email.com",
+  #   "mail_to":                   "to@email.com",
+  #   "delivery_method":           "smtp",
+  #   "smtp_address":              "localhost",
+  #   "smtp_port":                 "25",
+  #   "smtp_domain":               "localhost.local_domain",
+  #   "smtp_enable_starttls_auto": "true",
+  #   "smtp_username":             "username",
+  #   "smtp_password":             "XXXXXXXX"
+  # }
+  # ```
+  #
+  # @return [Hash]
+  def json_config_settings
+    settings[config[:json_config_name]]
+  end
+
   def short_name
     @event['client']['name'] + '/' + @event['check']['name']
   end
@@ -71,8 +97,8 @@ class Mailer < Sensu::Handler
   def prefix_subject
     if config[:subject_prefix]
       config[:subject_prefix] + ' '
-    elsif settings[config[:json_config]]['subject_prefix']
-      settings[config[:json_config]]['subject_prefix'] + ' '
+    elsif json_config_settings['subject_prefix']
+      json_config_settings['subject_prefix'] + ' '
     else
       ''
     end
@@ -96,8 +122,8 @@ class Mailer < Sensu::Handler
             config[:content_type]
           elsif @event['check']['content_type']
             @event['check']['content_type']
-          elsif settings[config[:json_config]]['content_type']
-            settings[config[:json_config]]['content_type']
+          elsif json_config_settings['content_type']
+            json_config_settings['content_type']
           else
             'plain'
           end
@@ -110,13 +136,12 @@ class Mailer < Sensu::Handler
   end
 
   def build_mail_to_list
-    json_config = config[:json_config]
     mail_to = Set.new
-    mail_to.add(@event['client']['mail_to'] || settings[json_config]['mail_to'])
-    if settings[json_config].key?('subscriptions') && @event['check']['subscribers']
+    mail_to.add(@event['client']['mail_to'] || json_config_settings['mail_to'])
+    if json_config_settings.key?('subscriptions') && @event['check']['subscribers']
       @event['check']['subscribers'].each do |sub|
-        if settings[json_config]['subscriptions'].key?(sub)
-          mail_to.add(settings[json_config]['subscriptions'][sub]['mail_to'].to_s)
+        if json_config_settings['subscriptions'].key?(sub)
+          mail_to.add(json_config_settings['subscriptions'][sub]['mail_to'].to_s)
         end
       end
     end
@@ -126,13 +151,12 @@ class Mailer < Sensu::Handler
   def message_template
     return config[:template] if config[:template]
     return @event['check']['template'] if @event['check']['template']
-    return settings[config[:json_config]]['template'] if settings[config[:json_config]]['template']
+    return json_config_settings['template'] if json_config_settings['template']
     nil
   end
 
   def build_body
-    json_config = config[:json_config]
-    admin_gui = settings[json_config]['admin_gui'] || 'http://localhost:8080/'
+    admin_gui = json_config_settings['admin_gui'] || 'http://localhost:8080/'
     # try to redact passwords from output and command
     output = (@event['check']['output']).to_s.gsub(/(\s-p|\s-P|\s--password)(\s*\S+)/, '\1 <password omitted>')
     command = (@event['check']['command']).to_s.gsub(/(\s-p|\s-P|\s--password)(\s*\S+)/, '\1 <password omitted>')
@@ -159,25 +183,24 @@ class Mailer < Sensu::Handler
   end
 
   def handle
-    json_config = config[:json_config]
     body = build_body
     content_type = parse_content_type
     mail_to = build_mail_to_list
-    mail_from = settings[json_config]['mail_from']
-    reply_to = settings[json_config]['reply_to'] || mail_from
+    mail_from = json_config_settings['mail_from']
+    reply_to = json_config_settings['reply_to'] || mail_from
 
-    delivery_method = settings[json_config]['delivery_method'] || 'smtp'
-    smtp_address = settings[json_config]['smtp_address'] || 'localhost'
-    smtp_port = settings[json_config]['smtp_port'] || '25'
-    smtp_domain = settings[json_config]['smtp_domain'] || 'localhost.localdomain'
+    delivery_method = json_config_settings['delivery_method'] || 'smtp'
+    smtp_address = json_config_settings['smtp_address'] || 'localhost'
+    smtp_port = json_config_settings['smtp_port'] || '25'
+    smtp_domain = json_config_settings['smtp_domain'] || 'localhost.localdomain'
 
-    smtp_username = settings[json_config]['smtp_username'] || nil
-    smtp_password = settings[json_config]['smtp_password'] || nil
-    smtp_authentication = settings[json_config]['smtp_authentication'] || :plain
-    smtp_use_tls = settings[json_config]['smtp_use_tls'] || nil
-    smtp_enable_starttls_auto = settings[json_config]['smtp_enable_starttls_auto'] == 'false' ? false : true
+    smtp_username = json_config_settings['smtp_username'] || nil
+    smtp_password = json_config_settings['smtp_password'] || nil
+    smtp_authentication = json_config_settings['smtp_authentication'] || :plain
+    smtp_use_tls = json_config_settings['smtp_use_tls'] || nil
+    smtp_enable_starttls_auto = json_config_settings['smtp_enable_starttls_auto'] == 'false' ? false : true
 
-    timeout_interval = settings[json_config]['timeout'] || 10
+    timeout_interval = json_config_settings['timeout'] || 10
 
     headers = {
       'X-Sensu-Host'        => (@event['client']['name']).to_s,
