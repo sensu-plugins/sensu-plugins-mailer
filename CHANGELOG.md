@@ -10,6 +10,9 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 - handler-mailer.rb - change `json_config` to `json_config_name` for clarity
   and add documentation
 
+### Added
+- handler-mailer.rb: add contact routing like Sensu Enterprise works 
+
 ## [1.0.0] - 2016-06-23
 ### Fixed
 - fix timeout deprecation for ruby 2.3.0

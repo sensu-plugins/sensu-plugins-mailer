@@ -85,6 +85,40 @@ client config called "template", the mailer handler config, default.
 ```
 By default, the handler will use `plain` as the SMTP authentication type, but you may also specify `"smtp_authentication": "ntlm"` for compatible servers, e.g. Microsoft Exchange.
 
+### Contact Based Routing
+
+Optionally, this handler can use the same syntax as [Sensu Enterprise contact routing](https://sensuapp.org/docs/0.26/enterprise/contact-routing.html) for sending e-mails for particular checks or clients, in addition to the previous configuration. This is configured by declaring contacts:
+
+**support.json**
+```
+{
+  "contacts": {
+    "support": {
+      "email": {
+        "to": "support@sensuapp.com"
+      }
+    }
+  }
+} 
+```
+
+Then, in a check definition, you can specify a contact or an array of contacts which should be notified by e-mail:
+
+**example_check.json**
+```
+{
+  "checks": {
+    "example_check": {
+      "command": "do_something.rb",
+      "handler": "mailer",
+      "contact": "support"
+    }
+  }
+}
+```
+
+Additionally, a client definition can specify a contact or an array of contacts to be notified of any check which alerts to the mailer handler. This is configured by specifying a contact value, or contacts array in the client.json configuration.
+
 ## Installation
 
 [Installation and Setup](http://sensu-plugins.io/docs/installation_instructions.html)
