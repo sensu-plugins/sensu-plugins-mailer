@@ -7,6 +7,9 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 ### Added
 - ruby 2.4 testing in travis. (@majormoses)
 
+### Fixed
+- PR template spell "Compatibility" correctly (@majormoses)
+
 ## [1.2.0] - 2017-06-24
 ### Added
 - handler-mailer.rb: add contact routing like Sensu Enterprise works (@stevenviola)
