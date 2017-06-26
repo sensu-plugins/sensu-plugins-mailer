@@ -4,6 +4,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachangelog.com/)
 
 ## [Unreleased]
+### Added
+- ruby 2.4 testing in travis. (@majormoses)
+
+### Fixed
+- PR template spell "Compatibility" correctly (@majormoses)
 
 ## [1.2.0] - 2017-06-24
 ### Added
