@@ -142,7 +142,7 @@ Create a handler file in `/etc/sensu/conf.d` with the following content, replaci
     "handlers": {
         "mailer": {
             "type": "pipe",
-            "command": "/opt/sensu/embedded/bin/handler-mailer.rb"
+            "command": "/opt/sensu/embedded/bin/handler-mailer.rb -j mailer"
         }
     }
 }
