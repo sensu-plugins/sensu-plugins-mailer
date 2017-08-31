@@ -6,6 +6,7 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 ## [Unreleased]
 ### Added
 - ruby 2.4 testing in travis. (@majormoses)
+- handler-mailer.rb: added default key in description (@arthurlogilab)
 
 ### Fixed
 - PR template spell "Compatibility" correctly (@majormoses)
