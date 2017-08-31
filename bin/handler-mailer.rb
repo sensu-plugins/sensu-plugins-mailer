@@ -36,7 +36,7 @@ end
 
 class Mailer < Sensu::Handler
   option :json_config_name,
-         description: 'Name of the JSON Configuration block in Sensu',
+         description: 'Name of the JSON Configuration block in Sensu (default: mailer)',
          short: '-j JsonConfig',
          long: '--json_config JsonConfig',
          required: false,
