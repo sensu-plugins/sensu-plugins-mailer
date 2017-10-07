@@ -1,15 +1,20 @@
-#Change Log
+# Change Log
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachangelog.com/)
+This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins/community/blob/master/HOW_WE_CHANGELOG.md)
 
 ## [Unreleased]
+
+### Breaking Change
+- handler-mailer.rb: emit an `unknown` with a helpful message when trying to configure `settings['contact']` with multiple objects. This helps avoid confusion over using `contact` when you meant `contacts`. (@majormoses)
+
 ### Added
 - ruby 2.4 testing in travis. (@majormoses)
 - handler-mailer.rb: added default key in description (@arthurlogilab)
 
 ### Fixed
 - PR template spell "Compatibility" correctly (@majormoses)
+- update changelog guideline location (@majormoses)
 
 ## [1.2.0] - 2017-06-24
 ### Added
