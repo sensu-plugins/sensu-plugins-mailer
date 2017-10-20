@@ -145,7 +145,13 @@ class Mailer < Sensu::Handler
         end
       end
     end
-    if settings.key?('contacts')
+    if settings.key?('contact') && settings['contact'].is_a?(Array)
+      msg = "you passed #{settings['contact']} which is meant to be a string, "
+      msg += 'if you need more than one contact you can use `contacts` to '
+      msg += 'configure multiple recipients'
+      p msg
+      exit 3 # unknown
+    elsif settings.key?('contacts')
       all_contacts = []
       %w(check client).each do |field|
         if @event[field].key?('contact')
