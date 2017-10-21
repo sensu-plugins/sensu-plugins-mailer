@@ -5,6 +5,7 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 
 ## [Unreleased]
 
+## [2.0.0] - 2017-10-21
 ### Breaking Change
 - handler-mailer.rb: emit an `unknown` with a helpful message when trying to configure `settings['contact']` with multiple objects. This helps avoid confusion over using `contact` when you meant `contacts`. (@majormoses)
 
@@ -101,6 +102,7 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 - initial release
 
 [Unreleased]: https://github.com/sensu-plugins/sensu-plugins-mailer/compare/1.2.0...HEAD
+[2.0.0]: https://github.com/sensu-plugins/sensu-plugins-mailer/compare/1.2.0...2.0.0
 [1.2.0]: https://github.com/sensu-plugins/sensu-plugins-mailer/compare/1.1.0...1.2.0
 [1.1.0]: https://github.com/sensu-plugins/sensu-plugins-mailer/compare/1.0.0...1.1.0
 [1.0.0]: https://github.com/sensu-plugins/sensu-plugins-mailer/compare/0.3.1...1.0.0
