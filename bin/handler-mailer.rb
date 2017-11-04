@@ -135,6 +135,14 @@ class Mailer < Sensu::Handler
     end
   end
 
+  def raise_contact_is_array(src)
+    msg = "you passed #{src} which is meant to be a string, "
+    msg += 'if you need more than one contact you can use `contacts` to '
+    msg += 'configure multiple recipients'
+    p msg
+    exit 3 # unknown
+  end
+
   def build_mail_to_list
     mail_to = Set.new
     mail_to.add(@event['client']['mail_to'] || json_config_settings['mail_to'])
@@ -146,15 +154,13 @@ class Mailer < Sensu::Handler
       end
     end
     if settings.key?('contact') && settings['contact'].is_a?(Array)
-      msg = "you passed #{settings['contact']} which is meant to be a string, "
-      msg += 'if you need more than one contact you can use `contacts` to '
-      msg += 'configure multiple recipients'
-      p msg
-      exit 3 # unknown
+      raise_contact_is_array(settings['contact'])
     elsif settings.key?('contacts')
       all_contacts = []
       %w(check client).each do |field|
-        if @event[field].key?('contact')
+        if @event[field].key?('contact') && @event[field]['contact'].is_a?(Array)
+          raise_contact_is_array(@event[field]['contact'])
+        elsif @event[field].key?('contact')
           all_contacts << @event[field]['contact']
         end
         if @event[field].key?('contacts')
