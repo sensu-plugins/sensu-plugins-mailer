@@ -5,6 +5,7 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 
 ## [Unreleased]
 
+## [2.0.1] - 2018-01-31
 ### Fixed
 - handler-mailer.rb: emit an `unknown` with a helpful message when receiving an event `@event['contact']` with multiple objects in an array. This helps avoid confusion over using `contact` when you meant `contacts`. (@majormoses)
 
@@ -104,7 +105,8 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 ### Added
 - initial release
 
-[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-mailer/compare/1.2.0...HEAD
+[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-mailer/compare/2.0.1...HEAD
+[2.0.1]: https://github.com/sensu-plugins/sensu-plugins-mailer/compare/2.0.0...2.0.1
 [2.0.0]: https://github.com/sensu-plugins/sensu-plugins-mailer/compare/1.2.0...2.0.0
 [1.2.0]: https://github.com/sensu-plugins/sensu-plugins-mailer/compare/1.1.0...1.2.0
 [1.1.0]: https://github.com/sensu-plugins/sensu-plugins-mailer/compare/1.0.0...1.1.0
