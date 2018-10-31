@@ -48,6 +48,12 @@ class Mailer < Sensu::Handler
          long: '--template TemplateFile',
          required: false
 
+  option :subject_template,
+         description: 'Subject template to use',
+         short: '-T TemplateFile',
+         long: '--subject_template TemplateFile',
+         required: false
+
   option :content_type,
          description: 'Content-type of message',
          short: '-c ContentType',
@@ -176,6 +182,26 @@ class Mailer < Sensu::Handler
     mail_to.to_a.join(', ')
   end
 
+  def subject_template
+    return config[:subject_template] if config[:subject_template]
+    return @event['check']['subject_template'] if @event['check']['subject_template']
+    return json_config_settings['subject_template'] if json_config_settings['subject_template']
+    nil
+  end
+
+  def build_subject
+    template = if subject_template && File.readable?(subject_template)
+                 File.read(subject_template)
+               else
+                 <<-SUBJECT.gsub(/^\s+/, '')
+        <%= action_to_string %> - <%= short_name %>: <% if (@event['check']['notification'] != nil) then %><%= @event['check']['notification'] %><% else %><%= status_to_string %><% end %>
+      SUBJECT
+               end
+
+    eruby = Erubis::Eruby.new(template)
+    eruby.result(binding)
+  end
+
   def message_template
     return config[:template] if config[:template]
     return @event['check']['template'] if @event['check']['template']
@@ -212,6 +238,8 @@ class Mailer < Sensu::Handler
 
   def handle
     body = build_body
+    subject = "#{prefix_subject}#{build_subject}"
+
     content_type = parse_content_type
     mail_to = build_mail_to_list
     mail_from = json_config_settings['mail_from']
@@ -238,12 +266,6 @@ class Mailer < Sensu::Handler
       'X-Sensu-Status'      => status_to_string.to_s,
       'X-Sensu-Occurrences' => (@event['occurrences']).to_s
     }
-
-    subject = if @event['check']['notification'].nil?
-                "#{prefix_subject}#{action_to_string} - #{short_name}: #{status_to_string}"
-              else
-                "#{prefix_subject}#{action_to_string} - #{short_name}: #{@event['check']['notification']}"
-              end
 
     Mail.defaults do
       delivery_options = {
