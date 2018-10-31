@@ -27,6 +27,10 @@ Optionally, you can specify your own ERB template file to use for the message
 body.  The order of precedence for templates is: command-line argument (-t),
 client config called "template", the mailer handler config, default.
 
+Optionally, you can specify your own ERB template file to use for the message
+subject.  The order of precedence for templates is: command-line argument (-T),
+client config called "subject_template", the mailer handler config, default.
+
 ```json
 {
   "mailer": {
@@ -36,6 +40,7 @@ client config called "template", the mailer handler config, default.
     "smtp_port": "25",
     "smtp_domain": "example.org",
     "template": "/optional/path/to/template.erb",
+    "subject_template": "/optional/path/to/subject_template.erb",
     "subscriptions": {
       "subscription_name": {
         "mail_to": "teamemail@example.com"
