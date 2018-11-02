@@ -4,6 +4,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins/community/blob/master/HOW_WE_CHANGELOG.md)
 
 ## [Unreleased]
+
+## [2.1.0] - 2018-11-01
 ### Added
 - handler-mailer.rb: add subject_template feature. With this option to can change the default subject with a template.
 
@@ -108,6 +110,7 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 - initial release
 
 [Unreleased]: https://github.com/sensu-plugins/sensu-plugins-mailer/compare/2.0.1...HEAD
+[2.1.0]: https://github.com/sensu-plugins/sensu-plugins-mailer/compare/2.0.1...2.1.0
 [2.0.1]: https://github.com/sensu-plugins/sensu-plugins-mailer/compare/2.0.0...2.0.1
 [2.0.0]: https://github.com/sensu-plugins/sensu-plugins-mailer/compare/1.2.0...2.0.0
 [1.2.0]: https://github.com/sensu-plugins/sensu-plugins-mailer/compare/1.1.0...1.2.0
