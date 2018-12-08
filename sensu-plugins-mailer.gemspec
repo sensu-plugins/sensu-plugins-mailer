@@ -30,7 +30,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'aws-ses',           '0.6.0'
   s.add_runtime_dependency 'mail',              '2.6.3'
   s.add_runtime_dependency 'mailgun-ruby',      '1.0.3'
-  s.add_runtime_dependency 'sensu-plugin',      '~> 2.7'
+  s.add_runtime_dependency 'sensu-plugin',      '>= 2.7', '< 4.0'
   s.add_runtime_dependency 'erubis',            '2.7.0'
   s.add_runtime_dependency 'ruby-ntlm',         '0.0.3'
 
