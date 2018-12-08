@@ -5,6 +5,9 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 
 ## [Unreleased]
 
+### Breaking Changes
+- bumped dependency of `sensu-plugin` to 2.x you can read about it  [here](https://github.com/sensu-plugins/sensu-plugin/blob/master/CHANGELOG.md#v145---2017-03-07) (@majormoses)
+
 ## [2.1.0] - 2018-11-01
 ### Added
 - handler-mailer.rb: add subject_template feature. With this option to can change the default subject with a template.
