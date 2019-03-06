@@ -5,6 +5,10 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 
 ## [Unreleased]
 
+### Breaking Changes
+- Bump sensu-plugin version from `~> 2.0` to `~> 4.0` for Sensu 1.x to Sensu Go event conversion you can read the changelog entries for [4.0](https://github.com/sensu-plugins/sensu-plugin/blob/master/CHANGELOG.md#400---2018-02-17) and [3.0](https://github.com/sensu-plugins/sensu-plugin/blob/master/CHANGELOG.md#300---2018-12-04)
+- drop support and testing for ruby 2.1 and 2.2 as they are EOL
+
 ## [3.0.0] - 2018-12-07
 ### Breaking Changes
 - bumped dependency of `sensu-plugin` to 2.x you can read about it [here](https://github.com/sensu-plugins/sensu-plugin/blob/master/CHANGELOG.md#v145---2017-03-07) (@asachs01)
