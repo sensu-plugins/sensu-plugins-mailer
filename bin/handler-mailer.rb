@@ -41,6 +41,12 @@ class Mailer < Sensu::Handler
          long: '--json_config JsonConfig',
          required: false,
          default: 'mailer'
+  option :diagnostic,
+         description: 'Do not send mail, just report configuration to stdout',
+         long: '--diagnostic',
+         required: false,
+         boolean: true,
+         default: false
 
   option :template,
          description: 'Message template to use',
@@ -237,6 +243,11 @@ class Mailer < Sensu::Handler
   end
 
   def handle
+    if config[:diagnostic]
+      puts "Diagnostic Mode - Reporting Only:"
+      puts "config: #{config}"
+      puts "json_config_settings: #{json_config_settings}"
+    end
     body = build_body
     subject = "#{prefix_subject}#{build_subject}"
 
@@ -266,7 +277,12 @@ class Mailer < Sensu::Handler
       'X-Sensu-Status'      => status_to_string.to_s,
       'X-Sensu-Occurrences' => (@event['occurrences']).to_s
     }
-
+    if config[:diagnostic]
+      puts "headewrs: #{headers}"
+      puts "subject: #{subject}"
+      puts "body: #{body}"
+      return
+    end
     Mail.defaults do
       delivery_options = {
         address: smtp_address,
