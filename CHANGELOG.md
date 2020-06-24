@@ -4,6 +4,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins/community/blob/master/HOW_WE_CHANGELOG.md)
 
 ## [Unreleased]
+### Changed
+- Add diagnostic option for `handler-mailer.rb` to help troubleshoot configuration issues.
+- Update bundler devevelopment dep to '2.1' to match travisCI defaults
 
 ## [4.0.0] - 2019-03-17
 ### Breaking Changes
